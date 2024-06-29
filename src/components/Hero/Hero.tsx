@@ -6,27 +6,39 @@ const heroData = {
   name: "Matthew Castle",
   introduction: "Hello there. I'm",
   description:
-    "I'm a software developer with a focus on clean code, ease of use, and accessibility. I enjoy gaming, gardening and collecting rocks.",
+    "Seattle based software developer with a focus on clean code, ease of use, and accessibility. I enjoy gaming, gardening and gathering gemstones.",
   github: "https://github.com/mrcastle",
   linkedin: "https://www.linkedin.com/in/matthewraycastle/",
   email: "matt.castle@sleeplessjade.com",
 };
 
 function Hero() {
-  const { name, introduction, description } = heroData;
+  const { name, introduction, description, github, linkedin, email } = heroData;
 
   return (
-    <div className=" mx-auto mt-40 px-8 py-16 bg-zinc-900 shadow-lg  bg-clip-padding bg-opacity-70 border border-zinc-900 backdrop-blur">
+    <div className=" mx-auto mt-40 px-8 py-16 bg-zinc-900 shadow-lg  bg-clip-padding bg-opacity-40 border-zinc-900 backdrop-blur-sm">
       <div className="max-w-2xl mx-auto text-left">
-        <div className="text-xl">{introduction}</div>
-        <div className="text-6xl mt-1 mb-4">{name}</div>
-        <div className="text-xl mb-4">{description}</div>
+        <div className="text-xl drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+          {introduction}
+        </div>
+        <div className="text-6xl mt-1 mb-4 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+          {name}
+        </div>
+        <div className="text-xl mb-4 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+          {description}
+        </div>
         <div className="text-center">
-          <FontAwesomeIcon icon={faGithub} size="3x" />
+          <a href={github} target="_blank">
+            <FontAwesomeIcon icon={faGithub} size="3x" />
+          </a>
 
-          <FontAwesomeIcon icon={faLinkedin} size="3x" className="mx-4" />
+          <a href={linkedin} target="_blank">
+            <FontAwesomeIcon icon={faLinkedin} size="3x" className="mx-4" />
+          </a>
 
-          <FontAwesomeIcon icon={faEnvelope} size="3x" />
+          <a href={`mailto:${email}`} target="_blank">
+            <FontAwesomeIcon icon={faEnvelope} size="3x" />
+          </a>
         </div>
       </div>
     </div>
