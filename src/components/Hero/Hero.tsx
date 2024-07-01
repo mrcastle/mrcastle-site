@@ -28,15 +28,15 @@ function Hero() {
           {description}
         </div>
         <div className="text-center">
-          <a href={github} target="_blank">
+          <a href={github} target="_blank" className="text-white">
             <FontAwesomeIcon icon={faGithub} size="3x" />
           </a>
 
-          <a href={linkedin} target="_blank">
+          <a href={linkedin} target="_blank" className="text-white">
             <FontAwesomeIcon icon={faLinkedin} size="3x" className="mx-4" />
           </a>
 
-          <a href={`mailto:${email}`} target="_blank">
+          <a href={`mailto:${email}`} target="_blank" className="text-white">
             <FontAwesomeIcon icon={faEnvelope} size="3x" />
           </a>
         </div>
