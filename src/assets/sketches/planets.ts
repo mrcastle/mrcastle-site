@@ -22,7 +22,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
 
     centerX = p5.width / 2;
     centerY = 0;
-    let mercury = new Celestial(30, 50, null, 88, p5.color(41, 37, 36));
+    let mercury = new Celestial(30, 50, null, 88, p5.color(51, 47, 46));
     let venus = new Celestial(50, 140, null, 200, p5.color(230, 230, 230));
     let earth = new Celestial(53, 260, null, 300, p5.color(47, 78, 106));
     let luna = new Celestial(12, 8, earth, 30, p5.color(246, 241, 213));
