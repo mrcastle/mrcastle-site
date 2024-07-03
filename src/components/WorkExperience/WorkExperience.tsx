@@ -11,21 +11,21 @@ const experiences: WorkExperience[] = [
     company: "Planet DDS",
     duration: "March 2023 - January 2024",
     description:
-      "Worked on developing and maintaining a client communication and marketing insights app for dental practices.",
+      "Worked on developing and maintaining client communication and marketing insights services for dental practices.",
   },
   {
     role: "Senior Frontend Developer",
     company: "Armaments Research Company, Inc.",
     duration: "April 2021 - February 2023",
     description:
-      "Lead the frontend development creating mapping, visualization, and armory management apps for a firearms IoT device startup",
+      "Led the frontend development creating mapping, visualization, and armory management apps for a firearms IoT device startup",
   },
   {
     role: "Software Developer",
     company: "Eleven Peppers Studios",
     duration: "February 2018 - March 2021",
     description:
-      "Developer for a primarily design company working on various contracts; TiVo and the Small Business Administration of note.",
+      "Developer for a primarily design-focused company working on various contracts; TiVo and the Small Business Administration of note.",
   },
   {
     role: "Software Developer",
@@ -39,7 +39,7 @@ const experiences: WorkExperience[] = [
     company: "Anne Arundel County Register of Wills",
     duration: "October 2011 - April 2017",
     description:
-      "Led the development of an house suite of office productivity, timekeeping, and customer support apps.",
+      "Led the development of an in-house suite of office productivity, timekeeping, and customer support apps.",
   },
 ];
 
