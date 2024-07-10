@@ -1,0 +1,77 @@
+/* Inspired by: https://codepen.io/rkuai/pen/ExLbPWG */
+
+:root {
+  --sky_color_dark: #1f2023;
+  --sky_color_light: #1e1b4b;
+}
+
+.light {
+  position: fixed;
+  z-index: -2;
+
+  background-image: linear-gradient(
+    var(--sky_color_light),
+    var(--sky_color_dark)
+  );
+
+  height: 100%;
+  width: 100%;
+  &:after,
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+  }
+  &:after {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+      circle at 50% -100%,
+      rgba(255, 243, 139, 0.5) 0%,
+      rgba(180, 174, 113, 0.2) 38%,
+      rgba(59, 61, 70, 0) 100%
+    );
+  }
+}
+
+.star-base {
+  background-color: #ffffff;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.star1 {
+  animation: 3s linear 1s infinite alternate twinkle;
+}
+
+.star2 {
+  animation: 4s linear 0s infinite alternate twinkle;
+}
+
+.star3 {
+  animation: 3.5s linear 0.5s infinite alternate twinkle;
+}
+
+.star4 {
+  animation: 1.25s linear 1.5s infinite alternate twinkle;
+}
+
+.star5 {
+  animation: 4s linear 2s infinite alternate twinkle;
+}
+
+.star6 {
+  animation: 2.5s linear 1s infinite alternate twinkle;
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
