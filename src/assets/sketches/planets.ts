@@ -24,7 +24,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     centerY = 0;
     let mercury = new Celestial(30, 50, null, 88, p5.color(51, 47, 46));
     let venus = new Celestial(50, 140, null, 200, p5.color(230, 230, 230));
-    let earth = new Celestial(53, 260, null, 300, p5.color(6, 95, 70));
+    let earth = new Celestial(53, 260, null, 300, p5.color(47, 78, 106));
     let luna = new Celestial(12, 8, earth, 30, p5.color(246, 241, 213));
     let mars = new Celestial(32, 390, null, 500, p5.color(153, 61, 0));
     let jupiter = new Celestial(150, 500, null, 1000, p5.color(176, 127, 53));
@@ -145,7 +145,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
       //add the orbital path if celestial has no parent object
       if (!this.parent) {
         p5.noFill();
-        p5.stroke(251, 215, 56, 100);
+        p5.stroke(74, 222, 128, 100);
 
         p5.circle(
           centerX,
