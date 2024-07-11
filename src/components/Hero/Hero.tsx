@@ -10,7 +10,7 @@ function Hero() {
     getUserData();
 
   return (
-    <div className="mx-auto mt-40 mb-96 px-8 py-16 bg-zinc-900 shadow-lg bg-clip-padding bg-opacity-40 border-zinc-900 backdrop-blur-sm">
+    <div className="md:w-fit sm:w-full mx-auto mt-40 mb-96 px-8 py-16 bg-zinc-900 shadow-lg bg-clip-padding bg-opacity-40 border-zinc-900 backdrop-blur-sm md:rounded-lg">
       <div className="max-w-2xl mx-auto text-left">
         <div className="text-xl text-emerald-300 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
           {introduction}
