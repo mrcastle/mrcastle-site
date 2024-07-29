@@ -1,19 +1,49 @@
 import { Sketch, SketchProps } from "@p5-wrapper/react";
+import { CelestialBody } from "../../components/Orrery/Orrery";
 
-type MySketchProps = SketchProps & {
-  canvasHeight: number;
-  canvasWidth: number;
+type OrrerySketchProps = {
+  windowHeight: number;
+  windowWidth: number;
+  celestialBodies: CelestialBody[];
 };
 
+type MySketchProps = SketchProps & OrrerySketchProps;
+
 export const sketch: Sketch<MySketchProps> = (p5) => {
+  function generateCelestialGraphics(
+    celestialBodies: CelestialBody[],
+    parent?: CelestialGraphic
+  ): CelestialGraphic[] {
+    let graphics: CelestialGraphic[] = [];
+
+    for (let i = 0; i < celestialBodies.length; i++) {
+      let celestialBody = celestialBodies[i];
+      const { radius, distance, color, satellites, days, showOrbitalPath } =
+        celestialBody;
+
+      const graphic = new CelestialGraphic(
+        radius,
+        distance,
+        parent ?? null,
+        days,
+        p5.color(color.r, color.g, color.b, color.a ?? null),
+        showOrbitalPath ?? false
+      );
+      graphics.push(graphic);
+
+      if (satellites) {
+        graphics = graphics.concat(
+          generateCelestialGraphics(satellites, graphic)
+        );
+      }
+    }
+
+    return graphics;
+  }
   let centerX: number;
   let centerY: number;
-  let sizeOfSun = 200;
 
-  let celestialBodies: Celestial[] = [];
-
-  //let canvasWidth = 1800;
-  //let canvasHeight = 1080;
+  let celestialGraphics: CelestialGraphic[] = [];
 
   let { innerWidth: canvasWidth, innerHeight: canvasHeight } = window;
 
@@ -22,63 +52,42 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
 
     centerX = p5.width / 2;
     centerY = 0;
-    let mercury = new Celestial(30, 50, null, 88, p5.color(51, 47, 46));
-    let venus = new Celestial(50, 140, null, 200, p5.color(230, 230, 230));
-    let earth = new Celestial(53, 260, null, 300, p5.color(47, 78, 106));
-    let luna = new Celestial(12, 8, earth, 30, p5.color(246, 241, 213));
-    let mars = new Celestial(32, 390, null, 500, p5.color(153, 61, 0));
-    let jupiter = new Celestial(150, 500, null, 1000, p5.color(176, 127, 53));
-    let saturn = new Celestial(125, 700, null, 2500, p5.color(176, 143, 54));
-    let uranus = new Celestial(100, 875, null, 3500, p5.color(54, 104, 150));
-    let neptune = new Celestial(100, 1050, null, 4000, p5.color(85, 128, 170));
-
-    celestialBodies = [
-      mercury,
-      venus,
-      earth,
-      mars,
-      jupiter,
-      saturn,
-      luna,
-      uranus,
-      neptune,
-    ];
   };
 
-  // p5.updateWithProps = ({
-  //   windowHeight,
-  //   windowWidth,
-  // }: {
-  //   windowHeight: number;
-  //   windowWidth: number;
-  // }) => {
-  //   if (windowHeight !== canvasHeight || windowWidth !== canvasWidth) {
-  //     p5.resizeCanvas(windowWidth, windowHeight);
-  //     canvasWidth = windowWidth;
-  //     canvasHeight = windowHeight;
-  //   }
-  // };
+  p5.updateWithProps = ({
+    windowHeight,
+    windowWidth,
+    celestialBodies,
+  }: OrrerySketchProps) => {
+    if (celestialBodies) {
+      celestialGraphics = generateCelestialGraphics(celestialBodies);
+    }
+
+    if (windowHeight !== canvasHeight || windowWidth !== canvasWidth) {
+      p5.resizeCanvas(windowWidth, windowHeight);
+      canvasWidth = windowWidth;
+      canvasHeight = windowHeight;
+
+      centerX = p5.width / 2;
+    }
+  };
 
   p5.draw = () => {
     p5.clear();
     p5.background(15, 23, 42, 0);
 
-    //add the sun
-    p5.fill(p5.color(250, 204, 21));
-    p5.circle(centerX, centerY, sizeOfSun);
-
-    for (let i = 0; i < celestialBodies.length; i++) {
-      let celestialBody = celestialBodies[i];
+    for (let i = 0; i < celestialGraphics.length; i++) {
+      let celestialBody = celestialGraphics[i];
 
       celestialBody.display();
       celestialBody.move();
     }
   };
 
-  class Celestial {
+  class CelestialGraphic {
     diameter: number;
     distance: number;
-    parent: Celestial | null;
+    parent: CelestialGraphic | null;
     days: number;
     color: any; //p5 color()
 
@@ -86,15 +95,18 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     currentY: number;
     degrees: number;
     step: number;
+    showOrbitalPath: boolean;
 
     constructor(
       diameter: number,
       distance: number,
-      parent: Celestial | null,
+      parent: CelestialGraphic | null,
       days: number,
-      color: any
+      color: any,
+      showOrbitalPath?: boolean
     ) {
       this.diameter = diameter;
+      this.showOrbitalPath = showOrbitalPath ?? false;
 
       if (parent) {
         this.distance = distance + parent.diameter / 2;
@@ -102,29 +114,28 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
         this.currentX = parent.currentX + this.distance;
         this.currentY = parent.currentY + this.distance;
       } else {
-        //account for the radius of the sun
-        this.distance = distance + this.diameter / 2 + sizeOfSun / 2;
-
         this.currentX = centerX;
-        this.currentY = centerY + this.distance;
+        this.currentY = centerY;
+        this.distance = distance;
       }
       this.parent = parent;
       this.days = days;
 
       this.degrees = 90;
+      //the ten is a modifier on the speed
       this.step = 360 / (this.days * 10);
 
       this.color = color;
     }
 
     move() {
-      if (this.degrees < 360) {
-        this.degrees += this.step;
-      } else {
-        this.degrees = this.degrees - 360;
-      }
-
       if (this.parent !== null) {
+        if (this.degrees < 360) {
+          this.degrees += this.step;
+        } else {
+          this.degrees = this.degrees - 360;
+        }
+
         //orbit around the parent
         this.currentX =
           this.parent.currentX +
@@ -133,27 +144,30 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
           this.parent.currentY +
           this.distance * p5.sin(p5.radians(this.degrees));
       } else {
-        //orbit around the center
-        this.currentX =
-          centerX + this.distance * p5.cos(p5.radians(this.degrees));
-        this.currentY =
-          centerY + this.distance * p5.sin(p5.radians(this.degrees));
+        this.currentX = centerX;
+        this.currentY = centerY;
       }
     }
 
     display() {
-      //add the orbital path if celestial has no parent object
-      if (!this.parent) {
+      //add the orbital path
+      if (this.showOrbitalPath && this.parent !== null) {
         p5.noFill();
         p5.stroke(74, 222, 128, 100);
 
         p5.circle(
-          centerX,
-          centerY,
-          p5.dist(centerX, centerY, this.currentX, this.currentY) * 2
+          this.parent.currentX,
+          this.parent.currentY,
+          p5.dist(
+            this.parent.currentX,
+            this.parent.currentY,
+            this.currentX,
+            this.currentY
+          ) * 2
         );
       }
 
+      //display the celestial body
       if (this.color) {
         p5.fill(this.color);
       }
