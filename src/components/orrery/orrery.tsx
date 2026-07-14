@@ -3,7 +3,7 @@ import { P5Canvas } from "@p5-wrapper/react";
 import { sketch } from "../../assets/sketches/planets";
 import { useWindowDimensions } from "../../hooks/window";
 
-import "./Orrery.css";
+import "./orrery.css";
 
 export type CelestialBody = {
   name: string;
