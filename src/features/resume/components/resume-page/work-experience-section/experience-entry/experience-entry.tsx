@@ -1,4 +1,4 @@
-import { WorkExperience } from "../../../data/experience";
+import type { WorkExperience } from "../../../../data/experience";
 
 type ExperienceEntryProps = {
   experience: WorkExperience;

@@ -1,5 +1,5 @@
-import { Sketch, SketchProps } from "@p5-wrapper/react";
-import { CelestialBody } from "../../components/Orrery/Orrery";
+import { type Sketch, type SketchProps } from "@p5-wrapper/react";
+import { type CelestialBody } from "../../components/orrery/orrery";
 
 type OrrerySketchProps = {
   windowHeight: number;
@@ -9,15 +9,17 @@ type OrrerySketchProps = {
 
 type MySketchProps = SketchProps & OrrerySketchProps;
 
+type RGBA = { r: number; g: number; b: number; a?: number };
+
 export const sketch: Sketch<MySketchProps> = (p5) => {
   function generateCelestialGraphics(
     celestialBodies: CelestialBody[],
-    parent?: CelestialGraphic
+    parent?: CelestialGraphic,
   ): CelestialGraphic[] {
     let graphics: CelestialGraphic[] = [];
 
     for (let i = 0; i < celestialBodies.length; i++) {
-      let celestialBody = celestialBodies[i];
+      const celestialBody = celestialBodies[i];
       const { radius, distance, color, satellites, days, showOrbitalPath } =
         celestialBody;
 
@@ -26,26 +28,25 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
         distance,
         parent ?? null,
         days,
-        p5.color(color.r, color.g, color.b, color.a ?? null),
-        showOrbitalPath ?? false
+        color,
+        showOrbitalPath ?? false,
       );
       graphics.push(graphic);
 
       if (satellites) {
         graphics = graphics.concat(
-          generateCelestialGraphics(satellites, graphic)
+          generateCelestialGraphics(satellites, graphic),
         );
       }
     }
 
     return graphics;
   }
-  let centerX: number;
-  let centerY: number;
-
   let celestialGraphics: CelestialGraphic[] = [];
 
   let { innerWidth: canvasWidth, innerHeight: canvasHeight } = window;
+  let centerX: number = canvasWidth / 2;
+  let centerY: number = 0;
 
   p5.setup = () => {
     p5.createCanvas(canvasWidth, canvasHeight);
@@ -77,7 +78,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     p5.background(15, 23, 42, 0);
 
     for (let i = 0; i < celestialGraphics.length; i++) {
-      let celestialBody = celestialGraphics[i];
+      const celestialBody = celestialGraphics[i];
 
       celestialBody.display();
       celestialBody.move();
@@ -89,7 +90,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     distance: number;
     parent: CelestialGraphic | null;
     days: number;
-    color: any; //p5 color()
+    color: RGBA;
 
     currentX: number;
     currentY: number;
@@ -102,8 +103,8 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
       distance: number,
       parent: CelestialGraphic | null,
       days: number,
-      color: any,
-      showOrbitalPath?: boolean
+      color: RGBA,
+      showOrbitalPath?: boolean,
     ) {
       this.diameter = diameter;
       this.showOrbitalPath = showOrbitalPath ?? false;
@@ -162,14 +163,14 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
             this.parent.currentX,
             this.parent.currentY,
             this.currentX,
-            this.currentY
-          ) * 2
+            this.currentY,
+          ) * 2,
         );
       }
 
       //display the celestial body
       if (this.color) {
-        p5.fill(this.color);
+        p5.fill(this.color.r, this.color.g, this.color.b, this.color.a ?? 255);
       }
       p5.noStroke();
       p5.circle(this.currentX, this.currentY, this.diameter);

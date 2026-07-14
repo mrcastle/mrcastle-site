@@ -1,0 +1,5 @@
+.text {
+  backdrop-filter: blur() brightness(9.5) saturate(11.5);
+  mask: linear-gradient(#000 0 0) border-box text;
+  text-shadow: 0 1px #0000008a;
+}

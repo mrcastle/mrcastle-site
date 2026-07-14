@@ -1,4 +1,4 @@
-import { ReactP5Wrapper } from "@p5-wrapper/react";
+import { P5Canvas } from "@p5-wrapper/react";
 
 import { sketch } from "../../assets/sketches/planets";
 import { useWindowDimensions } from "../../hooks/window";
@@ -119,7 +119,7 @@ function Orrery() {
   const { height, width } = useWindowDimensions();
 
   return (
-    <ReactP5Wrapper
+    <P5Canvas
       sketch={sketch}
       windowHeight={height}
       windowWidth={width}
