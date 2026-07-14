@@ -1,13 +1,13 @@
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
-import { getUserData } from "../../data/user";
+import { getUserData } from "../../../data/user";
 
-import IconLink from "./IconLink/IconLink";
+import IconLink from "./icon-link/icon-link";
 
-function Hero() {
-  const { name, introduction, description, github, linkedin, email } =
-    getUserData();
+import "./hero-section.css";
+
+function HeroSection() {
+  const { name, introduction, description, github, linkedin } = getUserData();
 
   return (
     <div className="md:w-fit sm:w-full mx-auto mt-40 mb-96 px-8 py-16 bg-zinc-900 shadow-lg bg-clip-padding bg-opacity-40 border-zinc-900 backdrop-blur-sm md:rounded-lg">
@@ -25,12 +25,10 @@ function Hero() {
           <IconLink icon={faGithub} url={github} />
 
           <IconLink icon={faLinkedin} url={linkedin} />
-
-          <IconLink icon={faEnvelope} url={email} isEmail={true} />
         </div>
       </div>
     </div>
   );
 }
 
-export default Hero;
+export default HeroSection;

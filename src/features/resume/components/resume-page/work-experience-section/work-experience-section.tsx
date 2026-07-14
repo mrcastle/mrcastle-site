@@ -1,7 +1,7 @@
-import { getExperiences } from "../../data/experience";
-import ExperienceEntry from "./ExperienceEntry/ExperienceEntry";
+import { getExperiences } from "../../../data/experience";
+import ExperienceEntry from "./experience-entry/experience-entry";
 
-function WorkExperience() {
+function WorkExperienceSection() {
   const experiences = getExperiences();
 
   return (
@@ -20,4 +20,4 @@ function WorkExperience() {
   );
 }
 
-export default WorkExperience;
+export default WorkExperienceSection;

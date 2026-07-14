@@ -1,17 +1,10 @@
-import Hero from "./components/Hero/Hero";
-import Orrery from "./components/Orrery/Orrery";
-import WorkExperience from "./components/WorkExperience/WorkExperience";
-import StarField from "./components/StarField/StarField";
-
 import "./App.css";
+import { ResumePage } from "./features/resume/components/resume-page/resume-page";
 
 function App() {
   return (
     <>
-      <StarField />
-      <Orrery />
-      <Hero />
-      <WorkExperience />
+      <ResumePage />
     </>
   );
 }

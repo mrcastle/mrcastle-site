@@ -1,8 +1,6 @@
-import classNames from "classnames/bind";
+import clsx from "clsx";
 
-import styles from "./StarField.module.css";
-
-const cx = classNames.bind(styles);
+import "./star-field.css";
 
 //get random position between 1 - 100;
 function randomPosition(min: number, max: number): number {
@@ -49,11 +47,11 @@ function StarField() {
   const stars = generateStars();
 
   return (
-    <div className={styles.light}>
+    <div className="light">
       {stars.map((star, index) => {
         const { top, left, size, starClass } = star;
 
-        const className = cx({
+        const className = clsx({
           "star-base": true,
           [starClass]: true,
         });
